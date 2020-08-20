@@ -7,13 +7,13 @@ import numpy as np
 from collections import deque, defaultdict
 import matplotlib.pyplot as plt
 import time
-from dqn_agent import Agent  # import agent.py
+from dqn_agent import Agent     # import agent.py
 
-WEIGHTS_PATH = 'outputs/'  # save weights here
-WEIGHTS_FILE = None  # use weights from trained agent
-TRAIN = False  # Train or load existing network weights
+WEIGHTS_PATH = 'outputs/'       # save weights here
+WEIGHTS_FILE = None             # use weights from trained agent
+TRAIN = False                   # Train or load existing network weights
 
-# instantiate environment, skip no graphics if you want to watch the agent
+# instantiate environment, skip no graphics if you want to watch the agent in action
 env = UnityEnvironment(file_name="unity_stuff/Banana.exe", no_graphics=True)
 
 # get the default brain
@@ -25,13 +25,13 @@ env_info = env.reset(train_mode=False)[brain_name]  # reset the environment
 state = env_info.vector_observations[0]  # get the current state
 state_size = len(state)
 
-agent = Agent(state_size, action_size, seed=0)  # initialise agent
+agent = Agent(state_size, action_size, seed=0, duel=True)  # initialise agent
 
 # number of agents in the environment
 print('Number of agents:', len(env_info.agents))
 
 
-def dqn(n_episodes=2000, max_t=1000, eps_start=1, eps_end=0.01, eps_decay=0.998):
+def dqn(n_episodes=2000, max_t=1000, eps_start=1, eps_end=0.01, eps_decay=0.993):
     """Deep Q-Learning.
 
     Params
@@ -46,7 +46,7 @@ def dqn(n_episodes=2000, max_t=1000, eps_start=1, eps_end=0.01, eps_decay=0.998)
     yellow_bananas = []     # track episode yellow bananas
     blue_bananas = []       # track episode blue bananas
     steps = []              # track episode steps
-    actions = []
+    epsilons = []           # track episode epsilons
     scores_window = deque(maxlen=100)  # last 100 scores
     eps = eps_start  # initialize epsilon
 
@@ -67,7 +67,6 @@ def dqn(n_episodes=2000, max_t=1000, eps_start=1, eps_end=0.01, eps_decay=0.998)
             done = env_info.local_done[0]  # see if episode has finished
             score += reward  # update the score
             n_steps += 1
-            actions.append(action)
             if reward == -1:
                 n_blue_bananas += 0
             if reward == 1:
@@ -82,6 +81,7 @@ def dqn(n_episodes=2000, max_t=1000, eps_start=1, eps_end=0.01, eps_decay=0.998)
         steps.append(n_steps)  # save most recent score
         yellow_bananas.append(n_yellow_bananas)  # save most recent score
         blue_bananas.append(n_blue_bananas)
+        epsilons.append(eps)
 
         eps = max(eps_end, eps_decay * eps)  # decrease epsilon
 
@@ -96,11 +96,11 @@ def dqn(n_episodes=2000, max_t=1000, eps_start=1, eps_end=0.01, eps_decay=0.998)
             torch.save(agent.qnetwork_local.state_dict(), weights_file_name)
             break
 
-    return scores, steps, yellow_bananas, blue_bananas
+    return scores, steps, yellow_bananas, blue_bananas, epsilons
 
 
 start_time = time.time()
-scores, steps, yellow_bananas, blue_bananas = dqn()
+scores, steps, yellow_bananas, blue_bananas, epsilons = dqn()
 print("--- Training took %s seconds ---" % (time.time() - start_time))
 
 # plot the scores
