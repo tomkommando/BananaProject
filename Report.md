@@ -1,7 +1,7 @@
 # Banana Collector Project
 
 ### Project Details
-We train an ```agent``` to navigate in a large square shaped space and collect yellow bananas while avoiding blue bananas. The agent interacts and receives feedback from ([Unity ML Agent](https://github.com/Unity-Technologies/ml-agents)) envionment using Python API. The problem is considered solved when the agent manages to collect 13 bananas on average over 100 consecutive episodes.
+We train an ```agent``` to navigate in a large square shaped space and collect yellow bananas while avoiding blue bananas. The agent interacts and receives feedback from [Unity ML Agent](https://github.com/Unity-Technologies/ml-agents) envionment using Python API. The problem is considered solved when the agent manages to collect 13 bananas on average over 100 consecutive episodes.
 
 The ```state space``` is 37 dimensional space and contains the agent's velocity, along with ray-based perception of objects around agent's forward direction. The agent has to learn which one of the following four ```actions``` to take in any given state:
 - ```0``` - move forward.
@@ -14,9 +14,12 @@ The ```state space``` is 37 dimensional space and contains the agent's velocity,
 Here we illustrate the training process before discussing training algorithm implementation.
 
 Before training the agent doesn't have a clue what to do:
+
 ![Scores](outputs/untrained_agent.gif)
 
+
 Trained agent collects bananas like a pro:
+
 ![Scores](outputs/trained_agent.gif)
 
 Training took 437 episodes: 
@@ -67,8 +70,11 @@ Parameters used in training:
     TAU = 1e-3              # for soft update of target parameters
     LR = 5e-4               # learning rate 
     UPDATE_EVERY = 4        # steps between updating network
+    EPSILON_START = 1       # epsilon in the start of the process
+    EPSILON_DECAY = .993    # we multiply epsilon by this for each episode
+    EPSILON_MIN = .01       # keep exploration going
 
-Weights of the trained agent neural network can be found here ```outputs/solution.pth```. And be used in the ```train_agent.ipynb``` to see the agent in action. 
+Weights of the trained agent neural network are saved in this folder: ```outputs/solution.pth```. Use these weights in the ```train_agent.ipynb``` to see a trained agent in action. 
 
 We also implemented Double Deep Q Learning solution without Dueling Architecture. It took more than 1000 episodes to converge. The dueling architecture took less than half of that which is significant improvement.
 
