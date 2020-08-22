@@ -2,9 +2,9 @@
 
 [image1]: https://user-images.githubusercontent.com/10624937/42135619-d90f2f28-7d12-11e8-8823-82b970a54d7e.gif "Trained Agent"
 
-# Project 1: Banana Collector
+# Banana Collector
 
-    ADD PIC HERE
+We train an agent to navigate in a large square shaped space and collect yellow bananas while avoiding blue bananas. The agent interacts and receives feedback from (Unity ML Agent) envionment using Python API. The problem is considered solved when the agent manages to collect 13 bananas on average over 100 consecutive episodes.
 
 ### Project Details
 
@@ -20,7 +20,7 @@ The state space has 37 dimensions and contains the agent's velocity, along with 
 
 The task is episodic, and in order to solve the environment, the agent must get an average score of +13 over 100 consecutive episodes.
 
-Read more about training process and results in [report](/report.md)
+Read more about training process and results in [report](/Report.md)
 
 ### Getting Started
 The README has instructions for installing dependencies or downloading needed files.
@@ -39,12 +39,3 @@ The README has instructions for installing dependencies or downloading needed fi
  
 ### Instructions
 The README describes how to run the code in the repository, to train the agent. For additional resources on creating READMEs or using Markdown, see here and here.
-
-### Sources:
-
-- [Human-level control through deep reinforcement learning (Deep Mind)](https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf)
-- [Dueling Double Q Implementation](https://github.com/simoninithomas/Deep_reinforcement_learning_Course/tree/master/Dueling%20Double%20DQN%20with%20PER%20and%20fixed-q%20targets)
-- [UdacityDeep reinforement learning Git](https://github.com/udacity/deep-reinforcement-learning)
-
-
-

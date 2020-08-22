@@ -2,55 +2,80 @@
 
 [image1]: https://user-images.githubusercontent.com/10624937/42135619-d90f2f28-7d12-11e8-8823-82b970a54d7e.gif "Trained Agent"
 
-# Banana Collector Project Report
+# Banana Collector Project
 
 ### Project Details
-We train an agent to navigate in a large square shaped space and collect yellow bananas while avoiding blue bananas. The agent interacts and receives feedback from ([Unity ML Agent](https://github.com/Unity-Technologies/ml-agents)) envionment using Python API. The problem is considered solved when the agent manages to collect 13 bananas on average over 100 consecutive episodes.
+We train an ```agent``` to navigate in a large square shaped space and collect yellow bananas while avoiding blue bananas. The agent interacts and receives feedback from ([Unity ML Agent](https://github.com/Unity-Technologies/ml-agents)) envionment using Python API. The problem is considered solved when the agent manages to collect 13 bananas on average over 100 consecutive episodes.
 
-### Training Process 
-Here we illustrate the training process before discussing training algorithm.
-#####Agent before training
+The ```state space``` is 37 dimensional space and contains the agent's velocity, along with ray-based perception of objects around agent's forward direction. The agent has to learn which one of the following four ```actions``` to take in any given state:
+- ```0``` - move forward.
+- ```1``` - move backward.
+- ```2``` - turn left.
+- ```3``` - turn right.
 
-An untrained agent just spins around and doesn't have a clue what to do:
+### Training 
+Here we illustrate the training process before discussing training algorithm implementation.
 
+Before training the agent doesn't have a clue what to do:
+![Scores](outputs/untrained_agent.gif)
 
-Training took 437 episodes, maybe it would go even faster if we epsilon decay speed: 
+Trained agent collects bananas like a pro:
+![Scores](outputs/trained_agent.gif)
+
+Training took 437 episodes: 
 
 ![Scores](outputs/scores.png)
 
 
 
-The agent did learn to collect yellow bananas really well. Interestingly, however, it keeps collecting blue bananas:
+The graph shows the agent did learn to collect yellow bananas really well. Interestingly, however, it still keeps collecting blue bananas:
 
 ![Bananas](outputs/bananas.png)
 
-We also implemented double Deep Q solution which took more than 1000 episodes to converge. The above is significant improvement to that.
 
-#####Agent after training
+### Learning Algorithm and Network Architecture
 
-### Learning Algorithm
+To train the agent, we implement Double Deep Q Learning algorithm, along with Dueling Network Architecture suggested in [this research paper](https://arxiv.org/abs/1511.06581).
+In the paper, deep neural network used to estimate state-action value ```Q(s,a)``` has two streams - one for estimating State value ```V(s)``` and another one to estimate Advantage values ```A(s, a)```. The Double Deep Q Learning algorithm can be found in ```Appendix A``` in the paper.
 
-The agent was trained using Dueling Double Deep Q Learning (DDDQL) algorithm introduced in [Dueling Network Architectures for Deep Reinforcement Learning](https://arxiv.org/abs/1511.06581) paper.
-The agent interprets the environment using a deep neural network. As suggested in the paper, the neural net has two streams - one for estimating State value V(s) and another one to estimate Advantage values A(s, a). 
-
-State of the Banana environment is a vector size of 37, we put it through a fully connected neural network with 2 hidden layers and use ReLu activation functions between the layers:
-- A(s, a): fully connected, input 37 - output 64 - output 64 -> 4 (action size)
-- V(s): fully connected, input 37 - output 64 - output 64 -> 1 (state value)
-- Output: V(s) + ( A(s, a) - mean[ A(s,a) ] )
+We implement a network with 2 hidden layers and Rectified Linear Unit activation functions between the layers as follows:  
 
 
-Parameters
+    QNetwork(
+      (state_value): Sequential(
+        (0): Linear(in_features=37, out_features=64, bias=True)
+        (1): ReLU()
+        (2): Linear(in_features=64, out_features=64, bias=True)
+        (3): ReLU()
+        (4): Linear(in_features=64, out_features=1, bias=True)
+      )
+      (advantage_value): Sequential(
+        (0): Linear(in_features=37, out_features=64, bias=True)
+        (1): ReLU()
+        (2): Linear(in_features=64, out_features=64, bias=True)
+        (3): ReLU()
+        (4): Linear(in_features=64, out_features=4, bias=True)
+      )
+    )
 
-    Include a GIF and/or link to a YouTube video of your trained agent!
-    Solve the environment in fewer than 1800 episodes!
-    Write a blog post explaining the project and your implementation!
-    Implement a double DQN, a dueling DQN, and/or prioritized experience replay!
-    For an extra challenge after passing this project, try to train an agent from raw pixels! Check out (Optional) Challenge: Learning from Pixels in the classroom for more details.
+Forward function in the neural net returns the state-action value like this:
 
+    output = state_value + ( advantage_value - mean( advantage_value ) )
+
+Parameters used in training:
+
+    BUFFER_SIZE = int(1e5)  # replay buffer size
+    BATCH_SIZE = 64         # minibatch size
+    GAMMA = 0.99            # discount factor
+    TAU = 1e-3              # for soft update of target parameters
+    LR = 5e-4               # learning rate 
+    UPDATE_EVERY = 4        # steps between updating network
+
+We also implemented Double Deep Q Learning solution without Dueling Architecture. It took more than 1000 episodes to converge. The dueling architecture took less than half of that which is significant improvement.
 
 ### Ideas for Further Research
 There has been a some interesting advancements lately in the field of DRL and some interesting ideas are for example [Prioritised Experience Replay](https://arxiv.org/abs/1511.05952) and [Rainbow](https://arxiv.org/abs/1710.02298), 
-which combines recent improvements in DRL. Incorporating these would probably make the training process significantly faster.
+which combines recent improvements in DRL. Incorporating these to the implementation could potentially speed up the training process significantly.
 
 
 ### Sources:
