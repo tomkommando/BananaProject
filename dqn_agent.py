@@ -101,10 +101,10 @@ class Agent():
 
         # experiences is already sent to GPU in the replay buffer class, so no need to worry about it here
         states, actions, rewards, next_states, dones = experiences
-
-
-        Q_targets_next_indicies = self.qnetwork_local(next_states).detach().max(1)[1].unsqueeze(1)
-        Q_targets_next = self.qnetwork_target(next_states).gather(1, Q_targets_next_indicies)
+        #
+        #
+        # Q_targets_next_indicies = self.qnetwork_local(next_states).detach().max(1)[1].unsqueeze(1)
+        # Q_targets_next = self.qnetwork_target(next_states).gather(1, Q_targets_next_indicies)
 
         # Get max predicted Q values (for next states) from target model
         Q_targets_next = self.qnetwork_target(next_states).detach().max(1)[0].unsqueeze(1)

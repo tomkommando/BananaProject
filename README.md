@@ -1,31 +1,33 @@
-[//]: # (Image References)
-
-[image1]: https://user-images.githubusercontent.com/10624937/42135619-d90f2f28-7d12-11e8-8823-82b970a54d7e.gif "Trained Agent"
-
 # Banana Collector
 
-We train an agent to navigate in a large square shaped space and collect yellow bananas while avoiding blue bananas. The agent interacts and receives feedback from (Unity ML Agent) envionment using Python API. The problem is considered solved when the agent manages to collect 13 bananas on average over 100 consecutive episodes.
+We train an ```agent``` to navigate in a large square shaped space and collect yellow bananas while avoiding blue bananas. The agent interacts and receives feedback from ([Unity ML Agent](https://github.com/Unity-Technologies/ml-agents)) envionment using Python API. The environment is considered solved when the agent manages to collect 13 bananas on average over 100 consecutive episodes.
 
-### Project Details
+Trained agent collects bananas like a pro:
 
-Goal of this project is to train an agent to navigate (and collect bananas!) in a large, square world.  
+![trained_agent](outputs/trained_agent.gif)
 
-A reward of +1 is provided for collecting a yellow banana, and a reward of -1 is provided for collecting a blue banana.  Thus, the goal of your agent is to collect as many yellow bananas as possible while avoiding blue bananas.  
-
-The state space has 37 dimensions and contains the agent's velocity, along with ray-based perception of objects around agent's forward direction.  Given this information, the agent has to learn how to best select actions.  Four discrete actions are available, corresponding to:
-- **`0`** - move forward.
-- **`1`** - move backward.
-- **`2`** - turn left.
-- **`3`** - turn right.
-
-The task is episodic, and in order to solve the environment, the agent must get an average score of +13 over 100 consecutive episodes.
-
-Read more about training process and results in [report](/Report.md)
+Read more about training process and results in the [report](/Report.md). :monkey:
 
 ### Getting Started
-The README has instructions for installing dependencies or downloading needed files.
 
-1. Download the environment from one of the links below.  You need only select the environment that matches your operating system:
+To run the code, you need Python 3.6 environment with required dependencies installed.
+1. Create environment
+
+```
+conda create --name bananaproject python=3.6
+source activate bananaproject
+```
+
+
+2. Clone this repository and install requirements
+
+```
+git clone https://github.com/tomkommando/BananaProject.git
+cd BananaProject
+pip install -r requirements.txt
+```
+
+3. You may need to download a Udacity Banana Project environment. Pick a version that match your operating system.
     - Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux.zip)
     - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana.app.zip)
     - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86.zip)
@@ -35,7 +37,9 @@ The README has instructions for installing dependencies or downloading needed fi
 
     (_For AWS_) If you'd like to train the agent on AWS (and have not [enabled a virtual screen](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md)), then please use [this link](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux_NoVis.zip) to obtain the environment.
 
-2. Place the file in the DRLND GitHub repository, in the `p1_navigation/` folder, and unzip (or decompress) the file.
+2. Place the file in the BananaProject GitHub repository folder, and unzip (or decompress) the file.
  
 ### Instructions
-The README describes how to run the code in the repository, to train the agent. For additional resources on creating READMEs or using Markdown, see here and here.
+
+Follow the instructions in [this notebook](train_agent.ipynb) to train an agent or watch a trained agent playing!
+

@@ -1,7 +1,3 @@
-[//]: # (Image References)
-
-[image1]: https://user-images.githubusercontent.com/10624937/42135619-d90f2f28-7d12-11e8-8823-82b970a54d7e.gif "Trained Agent"
-
 # Banana Collector Project
 
 ### Project Details
@@ -12,6 +8,7 @@ The ```state space``` is 37 dimensional space and contains the agent's velocity,
 - ```1``` - move backward.
 - ```2``` - turn left.
 - ```3``` - turn right.
+
 
 ### Training 
 Here we illustrate the training process before discussing training algorithm implementation.
@@ -70,6 +67,8 @@ Parameters used in training:
     TAU = 1e-3              # for soft update of target parameters
     LR = 5e-4               # learning rate 
     UPDATE_EVERY = 4        # steps between updating network
+
+Weights of the trained agent neural network can be found here ```outputs/solution.pth```. And be used in the ```train_agent.ipynb``` to see the agent in action. 
 
 We also implemented Double Deep Q Learning solution without Dueling Architecture. It took more than 1000 episodes to converge. The dueling architecture took less than half of that which is significant improvement.
 
