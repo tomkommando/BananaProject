@@ -79,7 +79,7 @@ Weights of the trained agent neural network are saved in this folder: ```outputs
 We also implemented Double Deep Q Learning solution without Dueling Architecture. It took more than 1000 episodes to converge. The dueling architecture took less than half of that which is significant improvement.
 
 ### Ideas for Further Research
-There has been a some interesting advancements lately in the field of DRL and some interesting ideas are for example [Prioritised Experience Replay](https://arxiv.org/abs/1511.05952) and [Rainbow](https://arxiv.org/abs/1710.02298), 
+For some quick wins, we could try and apply regularization techniques, such as [L2](https://towardsdatascience.com/intuitions-on-l1-and-l2-regularisation-235f2db4c261) and [Dropout](https://jmlr.org/papers/v15/srivastava14a.html), to prevent overfitting and therefore better results. Furthermore, there has been a some interesting advancements lately in the field of DRL, including [Prioritised Experience Replay](https://arxiv.org/abs/1511.05952) and [Rainbow](https://arxiv.org/abs/1710.02298), 
 which combines recent improvements in DRL. Incorporating these to the implementation could potentially speed up the training process significantly.
 
 
