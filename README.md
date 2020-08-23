@@ -1,8 +1,14 @@
 # Banana Collector
 
-We train an ```agent``` to navigate in a large square shaped space and collect yellow bananas while avoiding blue bananas. The agent interacts and receives feedback from ([Unity ML Agent](https://github.com/Unity-Technologies/ml-agents)) envionment using Python API. The environment is considered solved when the agent manages to collect 13 bananas on average over 100 consecutive episodes.
+We train an ```agent``` to navigate in a large square shaped space and collect yellow bananas while avoiding blue bananas. The agent interacts and receives feedback from ([Unity ML Agent](https://github.com/Unity-Technologies/ml-agents)) envionment using Python API.
 
-Trained agent collects bananas like a pro:
+The ```state space``` is 37 dimensional space and contains the agent's velocity, along with ray-based perception of objects around agent's forward direction. The agent has to learn which one of the following four ```actions``` to take in any given state:
+- ```0``` - move forward.
+- ```1``` - move backward.
+- ```2``` - turn left.
+- ```3``` - turn right.
+
+The task is episodic and the environment is considered solved when the agent manages to score of +13 on average over 100 consecutive episodes.
 
 ![trained_agent](outputs/trained_agent.gif)
 
@@ -40,6 +46,27 @@ pip install -r requirements.txt
 2. Place the file in the BananaProject GitHub repository folder, and unzip (or decompress) the file.
  
 ### Instructions
+In order to run the code:
 
-Follow the instructions in [this notebook](train_agent.ipynb) to train an agent or watch a trained agent playing!
+1. Activate environment:
 
+```
+source activate bananaproject
+```
+
+2. Make sure you are in the correct folder.
+```
+cd BananaProject
+```
+3. start jupyter notebook server
+
+```
+jupyter notebook
+```
+
+4. Open your browser and connect to the Jupyter Notebook server in the local host address: http://127.0.0.1:8888/. You may need to enter Token which is printed out in the console when you start the Jupyter Notebook server, alternatively you can choose a password for yourself.
+
+5. Run ```train_agent.ipynb``` and follow the instructions in the file to train an agent or watch a trained agent playing!
+
+
+![Jupyter](outputs/Jupyter.jpg)
